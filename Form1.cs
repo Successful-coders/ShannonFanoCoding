@@ -17,7 +17,7 @@ namespace Encryption_Lab2
     {
         private string alphabet;
         private string probabilities;
-        private Coder coder;
+        private CodingTable codingTable;
         private List<string> compressedSymbols;
 
 
@@ -74,8 +74,8 @@ namespace Encryption_Lab2
 
         private void CompressButton_Click(object sender, EventArgs e)
         {
-            string[] symbols = alphabet.Split(new char[] { ','});
-            string[] symbolProbs = probabilities.Split(new char[] { ','});
+            string[] symbols = alphabet.Split(new char[] { ',' });
+            string[] symbolProbs = probabilities.Split(new char[] { ',' });
             List<Element> elements = new List<Element>();
 
             for (int i = 0; i < symbols.Length && i < symbolProbs.Length; i++)
@@ -83,9 +83,33 @@ namespace Encryption_Lab2
                 elements.Add(new Element(symbols[i], double.Parse(symbolProbs[i])));
             }
 
-            coder = new Coder(elements);
+            codingTable = new CodingTable(elements);
+            codingTable.SortElements();
+            codingTable.CreateCodewords();
 
             string compressedText = compressedTextBox.Text;
+            if (!IsSymbolsInAlphabet(compressedText, symbols))
+            {
+                MessageBox.Show("Текст содержит символы, невключенные в алфавит");
+            }
+            else
+            {
+                foreach (var item in codingTable.Elements)
+                {
+                    compressedText = compressedText.Replace(item.Symbol, item.Codeword);
+                }
+
+                compressedTextBox.Text = compressedText;
+            }
+        }
+        private bool IsSymbolsInAlphabet(string text, string[] alphabet)
+        {
+            foreach (var item in alphabet)
+            {
+                text = text.Replace(item, "");
+            }
+
+            return text.Length == 0;
         }
     }
 }
