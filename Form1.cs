@@ -17,8 +17,7 @@ namespace Encryption_Lab2
     {
         private string alphabet;
         private string probabilities;
-        private CodingTable codingTable;
-        private List<string> compressedSymbols;
+        private ShannonCompressor compressor;
 
 
         public ShannonFano()
@@ -82,46 +81,22 @@ namespace Encryption_Lab2
             {
                 elements.Add(new Element(symbols[i], double.Parse(symbolProbs[i])));
             }
+            CodingTable codingTable = new CodingTable(elements);
 
-            codingTable = new CodingTable(elements);
-            codingTable.SortElements();
-            codingTable.CreateCodewords();
-
-            string compressedText = compressedTextBox.Text;
-            if (!IsSymbolsInAlphabet(compressedText, symbols))
+            compressor = new ShannonCompressor(codingTable);
+            try
             {
-                MessageBox.Show("Текст содержит символы, невключенные в алфавит");
-            }
-            else
-            {
-                string[] completedCodewords = new string[compressedText.Length];
-
-                foreach (var item in codingTable.Elements)
-                {
-                    List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);
-
-                    for (int i = 0; i < replaceIndexes.Count; i++)
-                    {
-                        int replaceIndex = replaceIndexes[i];
-
-                        completedCodewords[replaceIndex] = item.Codeword;
-
-                        compressedText = compressedText.Replace(item.Symbol, "");
-                    }
-                }
-
-                compressedText = string.Join("", completedCodewords);
+                string compressedText = compressor.Compress(compressedTextBox.Text);
                 compressedTextBox.Text = compressedText;
             }
-        }
-        private bool IsSymbolsInAlphabet(string text, string[] alphabet)
-        {
-            foreach (var item in alphabet)
+            catch(Exception exception)
             {
-                text = text.Replace(item, "");
+                MessageBox.Show(exception.Message);
             }
+        }
+        private void UncompressButton_Click(object sender, EventArgs e)
+        {
 
-            return text.Length == 0;
         }
     }
 }

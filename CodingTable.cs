@@ -48,5 +48,6 @@ namespace Encryption_Lab2
 
 
         public List<Element> Elements => elements;
+        public List<string> Alphabet => elements.Select(x => x.Symbol).ToList();
     }
 }

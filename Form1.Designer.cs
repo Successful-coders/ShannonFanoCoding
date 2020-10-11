@@ -34,6 +34,7 @@
             this.CompressButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.compressedTextBox = new System.Windows.Forms.TextBox();
+            this.uncompressButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadAlphabetFile
@@ -84,21 +85,32 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(322, 23);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Введите строку для сжатия";
+            this.label1.Text = "Введите строку для сжатия:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // compressedText
+            // compressedTextBox
             // 
-            this.compressedTextBox.Location = new System.Drawing.Point(15, 318);
-            this.compressedTextBox.Name = "compressedText";
-            this.compressedTextBox.Size = new System.Drawing.Size(319, 20);
+            this.compressedTextBox.Location = new System.Drawing.Point(12, 318);
+            this.compressedTextBox.Name = "compressedTextBox";
+            this.compressedTextBox.Size = new System.Drawing.Size(322, 20);
             this.compressedTextBox.TabIndex = 5;
+            // 
+            // uncompressButton
+            // 
+            this.uncompressButton.Location = new System.Drawing.Point(12, 388);
+            this.uncompressButton.Name = "uncompressButton";
+            this.uncompressButton.Size = new System.Drawing.Size(322, 38);
+            this.uncompressButton.TabIndex = 6;
+            this.uncompressButton.Text = "Разархивировать";
+            this.uncompressButton.UseVisualStyleBackColor = true;
+            this.uncompressButton.Click += new System.EventHandler(this.UncompressButton_Click);
             // 
             // ShannonFano
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.uncompressButton);
             this.Controls.Add(this.compressedTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CompressButton);
@@ -121,6 +133,7 @@
         private System.Windows.Forms.Button CompressButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox compressedTextBox;
+        private System.Windows.Forms.Button uncompressButton;
     }
 }
 
