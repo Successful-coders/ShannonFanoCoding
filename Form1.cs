@@ -94,11 +94,23 @@ namespace Encryption_Lab2
             }
             else
             {
+                string[] completedCodewords = new string[compressedText.Length];
+
                 foreach (var item in codingTable.Elements)
                 {
-                    compressedText = compressedText.Replace(item.Symbol, item.Codeword);
+                    List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);
+
+                    for (int i = 0; i < replaceIndexes.Count; i++)
+                    {
+                        int replaceIndex = replaceIndexes[i];
+
+                        completedCodewords[replaceIndex] = item.Codeword;
+
+                        compressedText = compressedText.Replace(item.Symbol, "");
+                    }
                 }
 
+                compressedText = string.Join("", completedCodewords);
                 compressedTextBox.Text = compressedText;
             }
         }
