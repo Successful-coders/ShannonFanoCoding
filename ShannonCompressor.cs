@@ -44,7 +44,7 @@ namespace Encryption_Lab2
                     {
                         int replaceIndex = replaceIndexes[i];
 
-                        completedCodewords[replaceIndex] = item.Codeword;
+                        completedCodewords[replaceIndex] = item.Cipher;
                         for (int j = replaceIndex + 1; j < replaceIndex + item.Symbol.Length; j++)
                         {
                             completedCodewords[j] = "";
@@ -59,7 +59,31 @@ namespace Encryption_Lab2
         }
         public string Uncompress(string compressedText)
         {
-            return compressedText;
+            string uncompressedText = "";
+            int minCipherLength = codingTable.Elements[0].Cipher.Length;
+            int maxCipherLength = codingTable.Elements[codingTable.Elements.Count - 1].Cipher.Length;
+
+            while (compressedText != "")
+            {
+                for (int cipherLength = minCipherLength; cipherLength <= maxCipherLength; cipherLength++)
+                {
+                    string cipher = compressedText.Substring(0, cipherLength);
+                    foreach (var element in codingTable.Elements)
+                    {
+                        if (element.Cipher == cipher)
+                        {
+                            uncompressedText += element.Symbol;
+                            compressedText = compressedText.Substring(cipherLength);
+
+                            cipherLength = maxCipherLength;
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            return uncompressedText;
         }
         public bool IsSymbolsInAlphabet(string text)
         {

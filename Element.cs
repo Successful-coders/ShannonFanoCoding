@@ -10,7 +10,7 @@ namespace Encryption_Lab2
     {
         private string symbol;
         private double probability;
-        private string codeword;
+        private string cipher;
 
 
         public Element(string symbol, double probability)
@@ -22,6 +22,6 @@ namespace Encryption_Lab2
 
         public string Symbol => symbol;
         public double Probability => probability;
-        public string Codeword { get => codeword; set => codeword = value; }
+        public string Cipher { get => cipher; set => cipher = value; }
     }
 }

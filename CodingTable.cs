@@ -23,16 +23,16 @@ namespace Encryption_Lab2
         }
         public void CreateCodewords()
         {
-            DownBranch(elements, "");
+            LowerBranch(elements, "");
         }
 
         private int SortByProbDescending(Element elem1, Element elem2)
         {
             return elem2.Probability.CompareTo(elem1.Probability);
         }
-        private void DownBranch(List<Element> elements, string directionCodeword)
+        private void LowerBranch(List<Element> elements, string directionCodeword)
         {
-            elements.ForEach(x => x.Codeword += directionCodeword);
+            elements.ForEach(x => x.Cipher += directionCodeword);
 
             if (elements.Count > 1)
             {
@@ -41,8 +41,8 @@ namespace Encryption_Lab2
                 List<Element> leftSide = elements.Take(sliceCount).ToList();
                 List<Element> rightSide = elements.Skip(sliceCount).ToList();
 
-                DownBranch(leftSide, "0");
-                DownBranch(rightSide, "1");
+                LowerBranch(leftSide, "0");
+                LowerBranch(rightSide, "1");
             }
         }
 
