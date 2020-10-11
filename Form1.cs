@@ -81,6 +81,27 @@ namespace Encryption_Lab2
             {
                 string compressedText = compressor.Compress(compressedTextBox.Text);
                 compressedTextBox.Text = compressedText;
+
+                var saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Compressed files (.rar)|*.rar";
+
+                DialogResult result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string fileName = saveFileDialog.FileName;
+
+                    // Check if file already exists. If yes, delete it.     
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+
+                    // Create a new file     
+                    using (StreamWriter sw = File.CreateText(fileName))
+                    {
+                        sw.Write(compressedText);
+                    }
+                }
             }
             catch(Exception exception)
             {
@@ -89,8 +110,40 @@ namespace Encryption_Lab2
         }
         private void UncompressButton_Click(object sender, EventArgs e)
         {
-            string uncompressedText = compressor.Uncompress(compressedTextBox.Text);
-            compressedTextBox.Text = uncompressedText;
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Compressed files (.rar)|*.rar";
+
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+
+                string compressedText = File.ReadAllText(fileName);
+
+                string uncompressedText = compressor.Uncompress(compressedText);
+                compressedTextBox.Text = uncompressedText;
+
+                var saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Text files (.txt)|*.txt";
+
+                result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    fileName = saveFileDialog.FileName;
+
+                    // Check if file already exists. If yes, delete it.     
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+
+                    // Create a new file     
+                    using (StreamWriter sw = File.CreateText(fileName))
+                    {
+                        sw.Write(uncompressedText);
+                    }
+                }
+            }
         }
     }
 }
