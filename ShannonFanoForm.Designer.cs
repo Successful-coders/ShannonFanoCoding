@@ -1,6 +1,6 @@
 ﻿namespace Encryption_Lab2
 {
-    partial class ShannonFano
+    partial class ShannonFanoForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -30,13 +30,14 @@
         {
             this.loadAlphabetFile = new System.Windows.Forms.Button();
             this.loadProbabilityFile = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.infoTextBox = new System.Windows.Forms.TextBox();
             this.CompressButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.compressedTextBox = new System.Windows.Forms.TextBox();
             this.uncompressButton = new System.Windows.Forms.Button();
             this.openProbabilites = new System.Windows.Forms.OpenFileDialog();
             this.openAlphabet = new System.Windows.Forms.OpenFileDialog();
+            this.infoLabel = new System.Windows.Forms.Label();
+            this.enterTextLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loadAlphabetFile
@@ -59,13 +60,14 @@
             this.loadProbabilityFile.UseVisualStyleBackColor = true;
             this.loadProbabilityFile.Click += new System.EventHandler(this.LoadProbabilityFile_Click);
             // 
-            // textBox1
+            // infoTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(466, 12);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(322, 187);
-            this.textBox1.TabIndex = 2;
+            this.infoTextBox.Location = new System.Drawing.Point(12, 97);
+            this.infoTextBox.Multiline = true;
+            this.infoTextBox.Name = "infoTextBox";
+            this.infoTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.infoTextBox.Size = new System.Drawing.Size(322, 187);
+            this.infoTextBox.TabIndex = 2;
             // 
             // CompressButton
             // 
@@ -76,19 +78,6 @@
             this.CompressButton.Text = "Архивировать";
             this.CompressButton.UseVisualStyleBackColor = true;
             this.CompressButton.Click += new System.EventHandler(this.CompressButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 287);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(322, 23);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Введите строку для сжатия:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // compressedTextBox
             // 
@@ -119,19 +108,40 @@
             this.openAlphabet.Filter = "Text files (*.txt)|*.txt";
             this.openAlphabet.Title = "Open alphabet file";
             // 
-            // ShannonFano
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoLabel.Location = new System.Drawing.Point(131, 73);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(109, 17);
+            this.infoLabel.TabIndex = 7;
+            this.infoLabel.Text = "Информация:";
+            // 
+            // enterTextLabel
+            // 
+            this.enterTextLabel.AutoSize = true;
+            this.enterTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enterTextLabel.Location = new System.Drawing.Point(58, 295);
+            this.enterTextLabel.Name = "enterTextLabel";
+            this.enterTextLabel.Size = new System.Drawing.Size(220, 17);
+            this.enterTextLabel.TabIndex = 8;
+            this.enterTextLabel.Text = "Введите строку для сжатия:";
+            // 
+            // ShannonFanoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(347, 450);
+            this.Controls.Add(this.enterTextLabel);
+            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.uncompressButton);
             this.Controls.Add(this.compressedTextBox);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.CompressButton);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.infoTextBox);
             this.Controls.Add(this.loadProbabilityFile);
             this.Controls.Add(this.loadAlphabetFile);
-            this.Name = "ShannonFano";
+            this.Name = "ShannonFanoForm";
             this.Text = "Shannon-Fano compression";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -142,13 +152,14 @@
 
         private System.Windows.Forms.Button loadAlphabetFile;
         private System.Windows.Forms.Button loadProbabilityFile;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox infoTextBox;
         private System.Windows.Forms.Button CompressButton;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox compressedTextBox;
         private System.Windows.Forms.Button uncompressButton;
         private System.Windows.Forms.OpenFileDialog openProbabilites;
         private System.Windows.Forms.OpenFileDialog openAlphabet;
+        private System.Windows.Forms.Label infoLabel;
+        private System.Windows.Forms.Label enterTextLabel;
     }
 }
 

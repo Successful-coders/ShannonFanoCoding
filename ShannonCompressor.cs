@@ -3,33 +3,33 @@ using System.Collections.Generic;
 
 namespace Encryption_Lab2
 {
-    class ShannonCompressor
+    class ShannonCompressor//Компрессор, изпользующий алгоритм Шеннона-Фано
     {
-        CodingTable codingTable;
+        private CodingTable codingTable;//Таблица
 
 
-        public ShannonCompressor(CodingTable codingTable)
+        public ShannonCompressor(CodingTable codingTable)//Конструктор, принимающий таблицу
         {
             this.codingTable = codingTable;
-            codingTable.SortElements();
-            codingTable.CreateCodewords();
+            codingTable.SortElements();//Сортируем элементы таблицы по убыванию вероятностей
+            codingTable.CreateCiphers();//Создаем для каждого символа свой шифр
         }
 
         
-        public string Compress(string compressedText)
+        public string Compress(string compressedText)//Сжатие
         {
-            if (!IsSymbolsInAlphabet(compressedText))
+            if (!IsSymbolsInAlphabet(compressedText))//Если есть элементы не из алфавита, выбрасываем исключение
             {
                 throw new Exception("Текст содержит символы, невключенные в алфавит");
             }
             else
             {
-                string[] completedCodewords = new string[compressedText.Length];
+                string[] completedCodewords = new string[compressedText.Length];//Массив шифров
 
                 foreach (var item in codingTable.Elements)
                 {
-                    List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);
-                    for (int i = 0; i < replaceIndexes.Count; i++)
+                    List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);//Получаем индексы строки, где стоит символ
+                    for (int i = 0; i < replaceIndexes.Count; i++)//Убираем индексы, если этот символ (набор символов) уже был перекодирован
                     {
                         for (int j = 0; j < completedCodewords.Length; j++)
                         {
@@ -40,7 +40,7 @@ namespace Encryption_Lab2
                         }
                     }
 
-                    for (int i = 0; i < replaceIndexes.Count; i++)
+                    for (int i = 0; i < replaceIndexes.Count; i++)//Добавляем в массив шифров новый
                     {
                         int replaceIndex = replaceIndexes[i];
 
@@ -52,30 +52,30 @@ namespace Encryption_Lab2
                     }
                 }
 
-                compressedText = string.Join("", completedCodewords);
+                compressedText = string.Join("", completedCodewords);//Объединяем массив шифров в одну строку
 
                 return compressedText;
             }
         }
-        public string Uncompress(string compressedText)
+        public string Uncompress(string compressedText)//Расжатие
         {
             string uncompressedText = "";
-            int minCipherLength = codingTable.Elements[0].Cipher.Length;
-            int maxCipherLength = codingTable.Elements[codingTable.Elements.Count - 1].Cipher.Length;
+            int minCipherLength = codingTable.Elements[0].Cipher.Length;//Минимальная длина одного шифра
+            int maxCipherLength = codingTable.Elements[codingTable.Elements.Count - 1].Cipher.Length;//Максимальная длина одного шифра
 
             while (compressedText != "")
             {
-                for (int cipherLength = minCipherLength; cipherLength <= maxCipherLength; cipherLength++)
+                for (int cipherLength = minCipherLength; cipherLength <= maxCipherLength; cipherLength++)//От минимального до макимального
                 {
-                    string cipher = compressedText.Substring(0, cipherLength);
-                    foreach (var element in codingTable.Elements)
+                    string cipher = compressedText.Substring(0, cipherLength);//Шифр
+                    foreach (var element in codingTable.Elements)//Если шифр соответсвует, то заменяем его в соответсвтии с таблицей
                     {
                         if (element.Cipher == cipher)
                         {
                             uncompressedText += element.Symbol;
                             compressedText = compressedText.Substring(cipherLength);
 
-                            cipherLength = maxCipherLength;
+                            cipherLength = maxCipherLength;//Переходим на поиск нового шифра
                             break;
                         }
                     }
@@ -85,7 +85,7 @@ namespace Encryption_Lab2
 
             return uncompressedText;
         }
-        public bool IsSymbolsInAlphabet(string text)
+        public bool IsSymbolsInAlphabet(string text)//Содержит ли строка символы не из алфавита
         {
             foreach (var item in codingTable.Alphabet)
             {

@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Encryption_Lab2
 {
-    class Element
+    class Element//Столбец таблицы
     {
-        private string symbol;
-        private double probability;
-        private string cipher;
+        private string symbol;//Символ из алфавита
+        private double probability;//Вероятность
+        private string cipher;//Шифр / код
 
 
-        public Element(string symbol, double probability)
+        public Element(string symbol, double probability)//Конструктор
         {
             this.symbol = symbol;
             this.probability = probability;
         }
 
 
-        public string Symbol => symbol;
-        public double Probability => probability;
-        public string Cipher { get => cipher; set => cipher = value; }
+        public string Symbol => symbol;//Символ из алфавита
+        public double Probability => probability;//Вероятность
+        public string Cipher { get => cipher; set => cipher = value; }//Шифр / код
     }
 }

@@ -16,7 +16,7 @@ namespace Encryption_Lab2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ShannonFano());
+            Application.Run(new ShannonFanoForm());
         }
     }
 }
