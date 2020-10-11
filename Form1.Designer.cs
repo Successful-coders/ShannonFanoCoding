@@ -35,6 +35,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.compressedTextBox = new System.Windows.Forms.TextBox();
             this.uncompressButton = new System.Windows.Forms.Button();
+            this.openProbabilites = new System.Windows.Forms.OpenFileDialog();
+            this.openAlphabet = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // loadAlphabetFile
@@ -105,6 +107,18 @@
             this.uncompressButton.UseVisualStyleBackColor = true;
             this.uncompressButton.Click += new System.EventHandler(this.UncompressButton_Click);
             // 
+            // openProbabilites
+            // 
+            this.openProbabilites.FileName = "Probabilities";
+            this.openProbabilites.Filter = "Text files (*.txt)|*.txt";
+            this.openProbabilites.Title = "Open probabilities file";
+            // 
+            // openAlphabet
+            // 
+            this.openAlphabet.FileName = "Alphabet";
+            this.openAlphabet.Filter = "Text files (*.txt)|*.txt";
+            this.openAlphabet.Title = "Open alphabet file";
+            // 
             // ShannonFano
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -126,7 +140,6 @@
 
         #endregion
 
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button loadAlphabetFile;
         private System.Windows.Forms.Button loadProbabilityFile;
         private System.Windows.Forms.TextBox textBox1;
@@ -134,6 +147,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox compressedTextBox;
         private System.Windows.Forms.Button uncompressButton;
+        private System.Windows.Forms.OpenFileDialog openProbabilites;
+        private System.Windows.Forms.OpenFileDialog openAlphabet;
     }
 }
 

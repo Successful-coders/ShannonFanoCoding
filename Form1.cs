@@ -23,22 +23,15 @@ namespace Encryption_Lab2
         public ShannonFano()
         {
             InitializeComponent();
-
-            openFileDialog1 = new OpenFileDialog()
-            {
-                FileName = "Select a text file",
-                Filter = "Text files (*.txt)|*.txt",
-                Title = "Open text file"
-            };
         }
 
         private void LoadAlphabetFile_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openAlphabet.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    var filePath = openFileDialog1.FileName;
+                    var filePath = openAlphabet.FileName;
                     using (StreamReader str = new StreamReader(filePath))
                     {
                         alphabet = str.ReadToEnd();
@@ -53,11 +46,11 @@ namespace Encryption_Lab2
         }
         private void LoadProbabilityFile_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openProbabilites.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    var filePath = openFileDialog1.FileName;
+                    var filePath = openProbabilites.FileName;
                     using (StreamReader str = new StreamReader(filePath))
                     {
                         probabilities = str.ReadToEnd();
