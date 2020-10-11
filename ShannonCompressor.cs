@@ -29,14 +29,26 @@ namespace Encryption_Lab2
                 foreach (var item in codingTable.Elements)
                 {
                     List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);
+                    for (int i = 0; i < replaceIndexes.Count; i++)
+                    {
+                        for (int j = 0; j < completedCodewords.Length; j++)
+                        {
+                            if (completedCodewords[j] != null)
+                            {
+                                replaceIndexes.Remove(j);
+                            }
+                        }
+                    }
 
                     for (int i = 0; i < replaceIndexes.Count; i++)
                     {
                         int replaceIndex = replaceIndexes[i];
 
                         completedCodewords[replaceIndex] = item.Codeword;
-
-                        compressedText = compressedText.Replace(item.Symbol, "");
+                        for (int j = replaceIndex + 1; j < replaceIndex + item.Symbol.Length; j++)
+                        {
+                            completedCodewords[j] = "";
+                        }
                     }
                 }
 
@@ -44,6 +56,10 @@ namespace Encryption_Lab2
 
                 return compressedText;
             }
+        }
+        public string Uncompress(string compressedText)
+        {
+            return compressedText;
         }
         public bool IsSymbolsInAlphabet(string text)
         {

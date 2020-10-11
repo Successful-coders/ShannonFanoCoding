@@ -89,7 +89,8 @@ namespace Encryption_Lab2
         }
         private void UncompressButton_Click(object sender, EventArgs e)
         {
-
+            string uncompressedText = compressor.Uncompress(compressedTextBox.Text);
+            compressedTextBox.Text = uncompressedText;
         }
     }
 }
