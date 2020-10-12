@@ -67,6 +67,9 @@ namespace Encryption_Lab2
             {
                 for (int cipherLength = minCipherLength; cipherLength <= maxCipherLength; cipherLength++)//От минимального до макимального
                 {
+                    if (cipherLength > compressedText.Length)
+                        throw new Exception("Ошибка при расжатии файла");
+
                     string cipher = compressedText.Substring(0, cipherLength);//Шифр
                     foreach (var element in codingTable.Elements)//Если шифр соответсвует, то заменяем его в соответсвтии с таблицей
                     {

@@ -104,5 +104,16 @@ namespace Encryption_Lab2
         public List<Element> Elements => elements;//Список элементов таблицы
         public int Count => elements.Count;//Количество столбцов таблицы
         public List<string> Alphabet => elements.Select(x => x.Symbol).ToList();//Алфавит
+        public bool IsProbabilitySumCorrect//Меньше и равна ли 1 сумма частот
+        {
+            get
+            {
+                double probabilitySum = 0.0d;
+
+                elements.ForEach(x => probabilitySum += x.Probability);
+
+                return probabilitySum <= 1.0d;
+            }
+        }
     }
 }

@@ -79,6 +79,12 @@ namespace Encryption_Lab2
             }
             CodingTable codingTable = new CodingTable(elements);
 
+            if(!codingTable.IsProbabilitySumCorrect)
+            {
+                MessageBox.Show("Сумма вероятнстей в файле больше единицы");
+                return;
+            }
+
             compressor = new ShannonCompressor(codingTable);//Создание архиватора
 
             PrintCiphers(codingTable);//Вывод символов таблицы и их шифров в информационный бокс
@@ -129,29 +135,36 @@ namespace Encryption_Lab2
 
                 string compressedText = File.ReadAllText(fileName);//Сжатый текст, полученный из файла
 
-                string uncompressedText = compressor.Uncompress(compressedText);//Расжатый текст
-                compressedTextBox.Text = uncompressedText;
-                infoTextBox.WriteLine("Исходный текст = " + uncompressedText);//выввод исходного текста
-
-                var saveFileDialog = new SaveFileDialog();//Создание диалогового окна для сохранения файла
-                saveFileDialog.Filter = "Text files (.txt)|*.txt";//Фильтр файла
-
-                result = saveFileDialog.ShowDialog();
-                if (result == DialogResult.OK)
+                try
                 {
-                    fileName = saveFileDialog.FileName;
+                    string uncompressedText = compressor.Uncompress(compressedText);//Расжатый текст
+                    compressedTextBox.Text = uncompressedText;
+                    infoTextBox.WriteLine("Исходный текст = " + uncompressedText);//выввод исходного текста
 
-                    // Удаляем файл, если такой уже существует     
-                    if (File.Exists(fileName))
-                    {
-                        File.Delete(fileName);
-                    }
+                    var saveFileDialog = new SaveFileDialog();//Создание диалогового окна для сохранения файла
+                    saveFileDialog.Filter = "Text files (.txt)|*.txt";//Фильтр файла
 
-                    // Создаем и записываем файл  
-                    using (StreamWriter sw = File.CreateText(fileName))
+                    result = saveFileDialog.ShowDialog();
+                    if (result == DialogResult.OK)
                     {
-                        sw.Write(uncompressedText);
+                        fileName = saveFileDialog.FileName;
+
+                        // Удаляем файл, если такой уже существует     
+                        if (File.Exists(fileName))
+                        {
+                            File.Delete(fileName);
+                        }
+
+                        // Создаем и записываем файл  
+                        using (StreamWriter sw = File.CreateText(fileName))
+                        {
+                            sw.Write(uncompressedText);
+                        }
                     }
+                }
+                catch (Exception exception)//Вывод ошибки
+                {
+                    MessageBox.Show(exception.Message);
                 }
             }
         }
