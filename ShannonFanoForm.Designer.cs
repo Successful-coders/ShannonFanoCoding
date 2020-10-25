@@ -38,6 +38,8 @@
             this.openAlphabet = new System.Windows.Forms.OpenFileDialog();
             this.infoLabel = new System.Windows.Forms.Label();
             this.enterTextLabel = new System.Windows.Forms.Label();
+            this.hamingButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadAlphabetFile
@@ -128,11 +130,33 @@
             this.enterTextLabel.TabIndex = 8;
             this.enterTextLabel.Text = "Введите строку для сжатия:";
             // 
+            // hamingButton
+            // 
+            this.hamingButton.Location = new System.Drawing.Point(12, 432);
+            this.hamingButton.Name = "hamingButton";
+            this.hamingButton.Size = new System.Drawing.Size(322, 38);
+            this.hamingButton.TabIndex = 9;
+            this.hamingButton.Text = "Кодирование методом Хэмминга";
+            this.hamingButton.UseVisualStyleBackColor = true;
+            this.hamingButton.Click += new System.EventHandler(this.HamingButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 476);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(322, 38);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Декодирование методом Хэмминга";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.UnHamingButton_Click);
+            // 
             // ShannonFanoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(347, 450);
+            this.ClientSize = new System.Drawing.Size(352, 533);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.hamingButton);
             this.Controls.Add(this.enterTextLabel);
             this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.uncompressButton);
@@ -160,6 +184,8 @@
         private System.Windows.Forms.OpenFileDialog openAlphabet;
         private System.Windows.Forms.Label infoLabel;
         private System.Windows.Forms.Label enterTextLabel;
+        private System.Windows.Forms.Button hamingButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

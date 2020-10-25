@@ -69,12 +69,13 @@ namespace Encryption_Lab2
         }
         private void CompressButton_Click(object sender, EventArgs e)//Нажатие на кнопку "Архивировать"
         {
-            string[] symbols = alphabet.Split(new char[] { ',' });//Преобразование в массив символов из алфавита
-            string[] symbolProbs = probabilities.Split(new char[] { ',' });//Преобразование в массив вероятностей
+            string[] symbols = alphabet.Split(new char[] { ' ' });//Преобразование в массив символов из алфавита
+            string[] symbolProbs = probabilities.Split(new char[] { ' ' });//Преобразование в массив вероятностей
             List<Element> elements = new List<Element>();
 
             for (int i = 0; i < symbols.Length && i < symbolProbs.Length; i++)
             {
+                
                 elements.Add(new Element(symbols[i], double.Parse(symbolProbs[i])));//Добавление стоблцов в таблицу
             }
             CodingTable codingTable = new CodingTable(elements);
@@ -98,7 +99,7 @@ namespace Encryption_Lab2
                 infoTextBox.WriteLine("Сжатый текст = " + compressedText);//Вывод сжатого текста
 
                 var saveFileDialog = new SaveFileDialog();//Создание диалогового окна для сохранения файла
-                saveFileDialog.Filter = "Compressed files (.rar)|*.rar";//Фильтр файла
+                saveFileDialog.Filter = "Compressed files (.txt)|*.txt";//Фильтр файла
 
                 DialogResult result = saveFileDialog.ShowDialog();
                 if (result == DialogResult.OK)
@@ -126,7 +127,7 @@ namespace Encryption_Lab2
         private void UncompressButton_Click(object sender, EventArgs e)//Нажатие на кнопку "Разархивировать"
         {
             var openFileDialog = new OpenFileDialog();//Создание диалогового окна для открытия файла
-            openFileDialog.Filter = "Compressed files (.rar)|*.rar";//Фильтр файла
+            openFileDialog.Filter = "Compressed files (.txt)|*.txt";//Фильтр файла
 
             DialogResult result = openFileDialog.ShowDialog();//После выбора файла
             if (result == DialogResult.OK)
@@ -169,6 +170,14 @@ namespace Encryption_Lab2
             }
         }
 
+        private void HamingButton_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void UnHamingButton_Click(object sender, EventArgs e)
+        {
+
+        }
         private void PrintCiphers(CodingTable codingTable)//Вывод символов таблицы и их шифров в информационный бокс
         {
             for (int i = 0; i < codingTable.Count; i++)

@@ -60,6 +60,31 @@ namespace Encryption_Lab2
                 return averageLength;
             }
         }
+
+        //добавляем символ четность/нечетности в конец каждого кода
+        public void Modify()
+        {
+            int ctr;
+            for (int i = 0; i < elements.Count ; i++)
+            {
+                ctr = 0;
+                for (int j = 0; j < elements[i].Cipher.Length; j++)
+                {
+                    if(elements[i].Cipher[j] == '1')
+                    {
+                        ctr++;
+                    }
+                }
+                if (ctr%2==0)
+                {
+                    elements[i].Cipher += "0";
+                }
+                else
+                {
+                    elements[i].Cipher += "1";
+                }
+            }
+        }
         public double Redundancy//Подсчёт избыточности
         {
             get
@@ -80,7 +105,7 @@ namespace Encryption_Lab2
                 return redundancy;
             }
         }
-        public bool IsCraft//Проверка на неравенство Крафта
+        public double IsCraft//Проверка на неравенство Крафта
         {
             get
             {
@@ -91,14 +116,7 @@ namespace Encryption_Lab2
                     res += Math.Pow(2, -elements[i].Cipher.Length);
                 }
 
-                if (res <= 1.0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return res;
             }
         }
         public List<Element> Elements => elements;//Список элементов таблицы

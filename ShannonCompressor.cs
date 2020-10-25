@@ -13,49 +13,51 @@ namespace Encryption_Lab2
             this.codingTable = codingTable;
             codingTable.SortElements();//Сортируем элементы таблицы по убыванию вероятностей
             codingTable.CreateCiphers();//Создаем для каждого символа свой шифр
+            codingTable.Modify();
         }
 
-        
+
         public string Compress(string compressedText)//Сжатие
         {
-            if (!IsSymbolsInAlphabet(compressedText))//Если есть элементы не из алфавита, выбрасываем исключение
-            {
-                throw new Exception("Текст содержит символы, невключенные в алфавит");
-            }
-            else
-            {
-                string[] completedCodewords = new string[compressedText.Length];//Массив шифров
+            //if (!IsSymbolsInAlphabet(compressedText))//Если есть элементы не из алфавита, выбрасываем исключение
+            //{
+            //    throw new Exception("Текст содержит символы, невключенные в алфавит");
+            //}
 
-                foreach (var item in codingTable.Elements)
+
+
+            string[] completedCodewords = new string[compressedText.Length];//Массив шифров
+
+            foreach (var item in codingTable.Elements)
+            {
+                List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);//Получаем индексы строки, где стоит символ
+                for (int i = 0; i < replaceIndexes.Count; i++)//Убираем индексы, если этот символ (набор символов) уже был перекодирован
                 {
-                    List<int> replaceIndexes = compressedText.AllIndexesOf(item.Symbol);//Получаем индексы строки, где стоит символ
-                    for (int i = 0; i < replaceIndexes.Count; i++)//Убираем индексы, если этот символ (набор символов) уже был перекодирован
+                    for (int j = 0; j < completedCodewords.Length; j++)
                     {
-                        for (int j = 0; j < completedCodewords.Length; j++)
+                        if (completedCodewords[j] != null)
                         {
-                            if (completedCodewords[j] != null)
-                            {
-                                replaceIndexes.Remove(j);
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < replaceIndexes.Count; i++)//Добавляем в массив шифров новый
-                    {
-                        int replaceIndex = replaceIndexes[i];
-
-                        completedCodewords[replaceIndex] = item.Cipher;
-                        for (int j = replaceIndex + 1; j < replaceIndex + item.Symbol.Length; j++)
-                        {
-                            completedCodewords[j] = "";
+                            replaceIndexes.Remove(j);
                         }
                     }
                 }
 
-                compressedText = string.Join("", completedCodewords);//Объединяем массив шифров в одну строку
+                for (int i = 0; i < replaceIndexes.Count; i++)//Добавляем в массив шифров новый
+                {
+                    int replaceIndex = replaceIndexes[i];
 
-                return compressedText;
+                    completedCodewords[replaceIndex] = item.Cipher;
+                    for (int j = replaceIndex + 1; j < replaceIndex + item.Symbol.Length; j++)
+                    {
+                        completedCodewords[j] = "";
+                    }
+                }
             }
+
+            compressedText = string.Join("", completedCodewords);//Объединяем массив шифров в одну строку
+
+            return compressedText;
+
         }
         public string Uncompress(string compressedText)//Расжатие
         {
