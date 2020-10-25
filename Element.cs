@@ -20,7 +20,7 @@ namespace Encryption_Lab2
         }
 
 
-        public string Symbol => symbol;//Символ из алфавита
+        public string Symbol { get => symbol; set => symbol = value; }//Символ из алфавита
         public double Probability => probability;//Вероятность
         public string Cipher { get => cipher; set => cipher = value; }//Шифр / код
     }

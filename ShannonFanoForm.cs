@@ -18,7 +18,7 @@ namespace Encryption_Lab2
         private string alphabet;//алфавит
         private string probabilities;//вероятности
         private ShannonCompressor compressor;//Архиватор
-
+        private Coder hamCoder;
 
         public ShannonFanoForm()//Конструктор форма
         {
@@ -169,14 +169,94 @@ namespace Encryption_Lab2
                 }
             }
         }
-
+        
+        private Coder hamming = new Coder();
         private void HamingButton_Click(object sender, EventArgs e)
-        {
+        { 
+            infoTextBox.Text = "Зашифрованный алфавит: " + Environment.NewLine;
+            for (int i = 0; i < 32; i++)
+            {
+                hamming.add(i.ToString(), 1 / 32);
+            }
+            hamming.hammingAlgorithm();
+            for (int i = 0; i < 32; i++)
+                infoTextBox.Text += i.ToString() + " - " + hamming.table[i].Cipher + Environment.NewLine;
+           
+            try
+            {
+                string compressedText = hamming.Encryption(compressedTextBox.Text);//Сжатый текст
+                compressedTextBox.Text = compressedText;
+                infoTextBox.WriteLine("Закодированный текст = " + compressedText);//Вывод сжатого текста
+
+                var saveFileDialog = new SaveFileDialog();//Создание диалогового окна для сохранения файла
+                saveFileDialog.Filter = "Coding files (.txt)|*.txt";//Фильтр файла
+
+                DialogResult result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string fileName = saveFileDialog.FileName;//Путь файла
+
+                    // Удаляем файл, если такой уже существует
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+
+                    // Создаем и записываем файл
+                    using (StreamWriter sw = File.CreateText(fileName))
+                    {
+                        sw.Write(compressedText);
+                    }
+                }
+            }
+            catch (Exception exception)//Вывод ошибки
+            {
+                MessageBox.Show(exception.Message);
+            }
 
         }
         private void UnHamingButton_Click(object sender, EventArgs e)
         {
+            infoTextBox.Text = "Зашифрованный алфавит: " + Environment.NewLine;
+            for (int i = 0; i < 32; i++)
+            {
+                hamming.add(i.ToString(), 1 / 32);
+            }
+            hamming.hammingAlgorithm();
+            for (int i = 0; i < 32; i++)
+                infoTextBox.Text += i.ToString() + " - " + hamming.table[i].Cipher + Environment.NewLine;
 
+            try
+            {
+                string compressedText = hamming.Decryption(compressedTextBox.Text);//Сжатый текст
+                compressedTextBox.Text = compressedText;
+                infoTextBox.WriteLine("Декодированный текст = " + compressedText);//Вывод сжатого текста
+
+                var saveFileDialog = new SaveFileDialog();//Создание диалогового окна для сохранения файла
+                saveFileDialog.Filter = "Decryption files (.txt)|*.txt";//Фильтр файла
+
+                DialogResult result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string fileName = saveFileDialog.FileName;//Путь файла
+
+                    // Удаляем файл, если такой уже существует
+                    if (File.Exists(fileName))
+                    {
+                        File.Delete(fileName);
+                    }
+
+                    // Создаем и записываем файл
+                    using (StreamWriter sw = File.CreateText(fileName))
+                    {
+                        sw.Write(compressedText);
+                    }
+                }
+            }
+            catch (Exception exception)//Вывод ошибки
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
         private void PrintCiphers(CodingTable codingTable)//Вывод символов таблицы и их шифров в информационный бокс
         {
@@ -187,5 +267,6 @@ namespace Encryption_Lab2
                 infoTextBox.WriteLine(symbolCipherPair);
             }
         }
+        
     }
 }
