@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace Encryption_Lab2
 
         public string Mul_H(string code) // синдром для полученного кода code
         {
-           
+
             string res = "";
             for (int i = 0; i < sizeSindrom - 1; i++)
             {
@@ -151,30 +152,24 @@ namespace Encryption_Lab2
             }
             return res;
         }
-
-        // Получаем текст из шифра
+        
+        // Получаем текст изoutputFile шифра
         public string Decryption(string cipher)
         {
-            string data = "";
+            string text = "";
+            string code;
             string symbol;
             string syndrome;
-            string message;
-            string caption;
-            MessageBoxButtons buttons;
-            DialogResult result;
 
             if (table.Count == 0)
             {
-                message = "Список кодов пуст";
-                caption = "Ошибка";
-                buttons = MessageBoxButtons.OK;
-                result = MessageBox.Show(message, caption, buttons);
+                throw new Exception("Ошибка!");
             }
 
-            message = "Исправлены ошибки:" + "\n";
-            for (int i = 0; i < cipher.Length - 2; i++)
+            for (int i = 0; i < cipher.Length; i++)
             {
-                string code = "";
+                code = "";
+
                 // Формируем очередное кодовое слово
                 while (code.Length < MODIFY_CODE_LENGTH)
                 {
@@ -186,16 +181,24 @@ namespace Encryption_Lab2
                 syndrome = Mul_H(code);
 
                 //Если синдром ненулевой, исправляем код
-                if (Convert.ToInt32(syndrome, 2) > 0)
+                if (Convert.ToInt32(syndrome, 2) == 0)
                 {
                     int symdromeIndex = syndromeTable.FindIndex(x => x == syndrome);
                     if (code[symdromeIndex] == '1')
+                    {
                         code = code.Remove(symdromeIndex, 1).Insert(symdromeIndex, "0");
+                    }
                     else
+                    {
                         code = code.Remove(symdromeIndex, 1).Insert(symdromeIndex, "1");
+                    }
 
-                    message += "Слово №" + i / MODIFY_CODE_LENGTH + " бит №" + (symdromeIndex + 1) + "\n";
+                    using (StreamWriter outputFile = new StreamWriter("error.txt"))
+                    {
+                        outputFile.WriteLine("Испровлена ошибка в символе №" + i / 9);
+                    }
                 }
+
                 // Ищем символ по коду
                 try
                 {
@@ -203,20 +206,19 @@ namespace Encryption_Lab2
                 }
                 catch
                 {
-                    symbol = "~";
+                    symbol = "?";
                 }
 
-                data += symbol;
+                text += symbol;
+                text += ' ';
                 i--;
             }
-            if (message.Length > 20)
-            {
-                caption = "Уведомление";
-                buttons = MessageBoxButtons.OK;
-                result = MessageBox.Show(message, caption, buttons);
-            }
-            return data;
-        }
 
+            // Удаляем последний символ пробела
+            text = text.Substring(0, text.Length - 1);
+
+            return text;
+
+        }
     }
 }

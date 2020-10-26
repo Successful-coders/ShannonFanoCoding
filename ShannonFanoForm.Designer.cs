@@ -124,11 +124,11 @@
             // 
             this.enterTextLabel.AutoSize = true;
             this.enterTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enterTextLabel.Location = new System.Drawing.Point(58, 295);
+            this.enterTextLabel.Location = new System.Drawing.Point(110, 298);
             this.enterTextLabel.Name = "enterTextLabel";
-            this.enterTextLabel.Size = new System.Drawing.Size(220, 17);
+            this.enterTextLabel.Size = new System.Drawing.Size(130, 17);
             this.enterTextLabel.TabIndex = 8;
-            this.enterTextLabel.Text = "Введите строку для сжатия:";
+            this.enterTextLabel.Text = "Введите строку:";
             // 
             // hamingButton
             // 

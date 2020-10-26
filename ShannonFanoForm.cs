@@ -215,6 +215,8 @@ namespace Encryption_Lab2
             }
 
         }
+        
+        
         private void UnHamingButton_Click(object sender, EventArgs e)
         {
             infoTextBox.Text = "Зашифрованный алфавит: " + Environment.NewLine;
@@ -257,6 +259,7 @@ namespace Encryption_Lab2
             {
                 MessageBox.Show(exception.Message);
             }
+
         }
         private void PrintCiphers(CodingTable codingTable)//Вывод символов таблицы и их шифров в информационный бокс
         {
