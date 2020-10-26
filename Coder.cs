@@ -49,7 +49,7 @@ namespace Encryption_Lab2
         {
 
             string res = "";
-            for (int i = 0; i < sizeSindrom - 1; i++)
+            for (int i = 0; i < sizeSindrom; i++)
             {
                 int sum = 0;
                 for (int j = 0; j < MODIFY_CODE_LENGTH; j++)
@@ -181,22 +181,27 @@ namespace Encryption_Lab2
                 syndrome = Mul_H(code);
 
                 //Если синдром ненулевой, исправляем код
-                if (Convert.ToInt32(syndrome, 2) == 0)
+                if (Convert.ToInt32(syndrome, 2) > 0)
                 {
                     int symdromeIndex = syndromeTable.FindIndex(x => x == syndrome);
-                    if (code[symdromeIndex] == '1')
-                    {
-                        code = code.Remove(symdromeIndex, 1).Insert(symdromeIndex, "0");
-                    }
-                    else
-                    {
-                        code = code.Remove(symdromeIndex, 1).Insert(symdromeIndex, "1");
-                    }
+                    //if (symdromeIndex > 0)
+                    //{
 
-                    using (StreamWriter outputFile = new StreamWriter("error.txt"))
-                    {
-                        outputFile.WriteLine("Испровлена ошибка в символе №" + i / 9);
-                    }
+
+                        if (code[symdromeIndex] == '1')
+                        {
+                            code = code.Remove(symdromeIndex, 1).Insert(symdromeIndex, "0");
+                        }
+                        else
+                        {
+                            code = code.Remove(symdromeIndex, 1).Insert(symdromeIndex, "1");
+                        }
+
+                        using (StreamWriter outputFile = new StreamWriter("error.txt"))
+                        {
+                            outputFile.WriteLine("Испровлена ошибка в символе №" + i / 9);
+                        }
+                    //}
                 }
 
                 // Ищем символ по коду

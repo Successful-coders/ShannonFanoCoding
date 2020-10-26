@@ -208,6 +208,7 @@ namespace Encryption_Lab2
                         sw.Write(compressedText);
                     }
                 }
+                hamming.clearTable();
             }
             catch (Exception exception)//Вывод ошибки
             {
@@ -254,6 +255,7 @@ namespace Encryption_Lab2
                         sw.Write(compressedText);
                     }
                 }
+                hamming.clearTable();
             }
             catch (Exception exception)//Вывод ошибки
             {
